@@ -1,7 +1,7 @@
 -- A simple script to automatically change ytdl-format 
 -- for specific Stream sources, in this case to lower
--- video quality down to 480p, 30 FPS and no VP9 only 
--- if it's Youtube or Twitch.
+-- video quality down to 480p, 30 FPS and no VP9 
+-- only if it's Youtube or Twitch.
 
 local msg = require 'mp.msg'
 local utils = require 'mp.utils'
