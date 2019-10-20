@@ -14,12 +14,10 @@ function Set (t)
 	return set
 end
 
--- List domains that need ytdl-format change
 VSTREAMS = Set {
 	'youtu.be', 'youtube.com', 'twitch.tv'
 }
 
--- Extract domain from URL
 function get_streamsource(path)
 	match = string.match(path, "[%w%.]*%.(%w+%.%w+)")
 	if match == nil then
@@ -32,10 +30,8 @@ end
 
 function ytdlAutoChange()
 	local path = mp.get_property("path", "")
-	
-	-- First make sure that it's a URL, otherwise don't run script
+
 	if string.match(string.lower(path), "^(https?://)") then
-		-- If there is a match, change ytdl-format, otherwise no change.
 		if VSTREAMS[string.lower(get_streamsource(path))] then
 			mp.set_property("ytdl-format", "bestvideo[height<=?480][fps<=?30][vcodec!=?vp9]+bestaudio/best[height<=480]")
 			msg.info("Match found, ytdl-format has been changed.")
