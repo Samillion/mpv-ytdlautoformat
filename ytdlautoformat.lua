@@ -1,9 +1,7 @@
 -- A simple script to automatically change ytdl-format 
 -- for specific Stream sources, in this case to lower
--- video quality down to 480p and no VP9 only if it's
--- Youtube or Twitch.
-
--- issues: Pattern match fails with youtu.be
+-- video quality down to 480p, 30 FPS and no VP9 only 
+-- if it's Youtube or Twitch.
 
 local msg = require 'mp.msg'
 local utils = require 'mp.utils'
@@ -15,16 +13,13 @@ function Set (t)
 end
 
 VSTREAMS = Set {
-	'youtu.be', 'youtube.com', 'twitch.tv'
+	'youtu.be', 'youtube.com', 'www.youtube.com', 
+	'twitch.tv', 'www.twitch.tv'
 }
 
 function get_streamsource(path)
-	match = string.match(path, "[%w%.]*%.(%w+%.%w+)")
-	if match == nil then
-		return "nomatch"
-	else
-		return match
-	end
+	local hostname = path:match '^https?://([^/]+)/' or ''
+	return hostname:match '(%w+%.%w+)$'
 end
 
 
