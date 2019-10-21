@@ -1,7 +1,17 @@
--- A simple script to automatically change ytdl-format 
--- for specific Stream sources, in this case to lower
--- video quality down to 480p, 30 FPS and no VP9 
--- only if it's Youtube or Twitch.
+--[[
+
+A simple mpv script to automatically change ytdl-format (youtube-dl)
+specifically if the URL is Youtube or Twitch.
+
+If the URL is Youtube or Twitch, ytdl-format is set to:
+480p, 30 FPS and no VP9.
+
+To add more domains, simply add them to the VSTREAMS set.
+
+To adjust quality, simply change 480 to 720 for 720p, or 1080
+within the ytdlAutoChange() function.
+
+--]]
 
 local msg = require 'mp.msg'
 local utils = require 'mp.utils'
