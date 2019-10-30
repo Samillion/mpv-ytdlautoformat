@@ -19,30 +19,30 @@ ytdlBest will be used.
 
 --]]
 
-ytdlLow = "bestvideo[height<=?480][fps<=?30][vcodec!=?vp9]+bestaudio/best[height<=480]"
-ytdlBest = "bestvideo[fps<=?30][vcodec!=?vp9]+bestaudio/best"
+local ytdlLow = "bestvideo[height<=?480][fps<=?30][vcodec!=?vp9]+bestaudio/best[height<=480]"
+local ytdlBest = "bestvideo[fps<=?30][vcodec!=?vp9]+bestaudio/best"
 
 local msg = require 'mp.msg'
 local utils = require 'mp.utils'
 
-function Set (t)
+local function Set (t)
 	local set = {}
 	for _, v in pairs(t) do set[v] = true end
 	return set
 end
 
-VSTREAMS = Set {
+local VSTREAMS = Set {
 	'youtu.be', 'youtube.com', 'www.youtube.com', 
 	'twitch.tv', 'www.twitch.tv'
 }
 
-function get_streamsource(path)
+local function get_streamsource(path)
 	local hostname = path:match '^https?://([^/]+)/' or ''
 	return hostname:match '(%w+%.%w+)$'
 end
 
 
-function ytdlAutoChange(name, value)
+local function ytdlAutoChange(name, value)
 	local path = value
 
 	if VSTREAMS[string.lower(get_streamsource(path))] then
@@ -58,7 +58,7 @@ function ytdlAutoChange(name, value)
 	msg.info("Finished check, no longer observing ytdlAutoChange.")
 end
 
-function ytdlCheck()
+local function ytdlCheck()
 	local path = mp.get_property("path", "")
 	
 	if string.match(string.lower(path), "^(https?://)") then
