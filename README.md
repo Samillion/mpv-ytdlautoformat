@@ -1,11 +1,11 @@
 # mpv-ytdlautoformat
 A simple mpv script to automatically change `ytdl-format` (for youtube-dl), specifically if the URL is Youtube or Twitch.
 
-If the URL is Youtube or Twitch, `ytdl-format` is set to:
-480p, 30 FPS and no VP9.
+This script supports and works with multi-purpose playlists. For example, if you have a playlist that includes Youtube URLs, Vimeo URLs and local files.
 
-Otherwise, `ytdl-format` is set to:
-Best video quality, 30 FPS and no VP9
+If the URL is Youtube or Twitch, `ytdl-format` is set to: 480p, 30 FPS and no VP9.
+
+Otherwise, `ytdl-format` is set to: Best video quality, 30 FPS and no VP9
 
 # Adding More Domains & Adjusting Video Quality
 If you would like to add more domains to have `ytdl-format` automatiaclly changed for them, simply add them to the `VSTREAMS` set.
