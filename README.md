@@ -25,3 +25,8 @@ Simply place `ytdlautoformat.lua` in the corresponding mpv scripts location of y
 - Windows: `%APPDATA%\mpv\scripts\` or `C:\users\USERNAME\AppData\Roaming\mpv\scripts\`
 - Linux: `~/.config/mpv/scripts/` or `/home/USERNAME/.config/mpv/scripts/`
 - Mac: `~/.config/mpv/scripts/` or `/Users/USERNAME/.config/mpv/scripts/`
+
+# Preview/Demo
+A screenshot of the script running and showing process and changes in a playlist.
+
+![mpv-ytdlautoformat preview](https://raw.githubusercontent.com/Samillion/mpv-ytdlautoformat/master/mpv-ytdlautoformat-demo.png)
