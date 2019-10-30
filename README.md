@@ -26,6 +26,8 @@ Simply place `ytdlautoformat.lua` in the corresponding mpv scripts location of y
 - Linux: `~/.config/mpv/scripts/` or `/home/USERNAME/.config/mpv/scripts/`
 - Mac: `~/.config/mpv/scripts/` or `/Users/USERNAME/.config/mpv/scripts/`
 
+The script doesn't change or alter configuration in other files, so removing the `ytdlautoformat.lua` script from the mpv scripts folder is all that is needed to uninstall/disable.
+
 # Preview/Demo
 A screenshot of the script running and showing process and changes in a playlist.
 
