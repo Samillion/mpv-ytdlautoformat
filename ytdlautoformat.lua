@@ -45,13 +45,13 @@ end
 function ytdlAutoChange(name, value)
 	local path = value
 
-		if VSTREAMS[string.lower(get_streamsource(path))] then
-			mp.set_property("ytdl-format", ytdlLow)
-			msg.info("Domain match found, ytdl-format has been changed.")
-			msg.info("Changed ytdl-format: "..mp.get_property("ytdl-format"))
-		else
-			msg.info("No domain match, ytdl-format unchanged.")
-		end
+	if VSTREAMS[string.lower(get_streamsource(path))] then
+		mp.set_property("ytdl-format", ytdlLow)
+		msg.info("Domain match found, ytdl-format has been changed.")
+		msg.info("Changed ytdl-format: "..mp.get_property("ytdl-format"))
+	else
+		msg.info("No domain match, ytdl-format unchanged.")
+	end
 
 	
 	mp.unobserve_property(ytdlAutoChange)
