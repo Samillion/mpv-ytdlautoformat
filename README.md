@@ -14,6 +14,11 @@ To adjust quality or FPS for either low quality or best/default quality, change 
 
 The `ytdlChange` value will be used for matched domains in the `StreamSource` set, otherwise `ytdlDefault` will be used. So in essence, `ytdlDefault` acts as the default `ytdl-format` you would normally set in `mpv.conf`
 
+# How is this script useful?
+Some streaming websites do not offer multi-quality per video (Openload, for example). So if you have `ytdl-format` in `mpv.conf` set to only play 480p or 720p videos, mpv/youtube-dl will not run it because it cannot find a video with the specified format.
+
+This script helps you set a lower or a specific quality for some websites, while leaving the rest as default. That way all video streams will play and you won't have to keep editing `mpv.conf` each time to make it work.
+
 # Changes to mpv configuration made by the script
 The script will override any `ytdl-format` you have set in `mpv.conf` or in commandline. To set the default value, please change `ytdlDefault` within the script to the value you desire.
 
