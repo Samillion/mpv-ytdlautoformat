@@ -36,4 +36,4 @@ The script doesn't change or alter configuration in other files, so removing the
 # Preview/Demo
 A screenshot of the script running and showing process and changes in a playlist.
 
-![mpv-ytdlautoformat preview](https://raw.githubusercontent.com/Samillion/mpv-ytdlautoformat/master/mpv-ytdlautoformat-demo.png)
+![mpv-ytdlautoformat preview](https://i.postimg.cc/ncWzx2QS/mpv-ytdlautoformat-demo.png)
