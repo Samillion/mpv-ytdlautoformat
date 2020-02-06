@@ -3,27 +3,19 @@
 A simple mpv script to automatically change ytdl-format (for youtube-dl)
 specifically if the URL is Youtube or Twitch.
 
-If the URL is Youtube or Twitch, ytdl-format is set to:
-480p, 30 FPS and no VP9.
-
-Otherwise, ytdl-format is set to:
-Best video quality, 30 FPS and no VP9
-
 To add more domains, simply add them to the StreamSource set.
 
-To adjust quality or FPS for either low quality or best/default quality
-change the values of ytdlChange and ytdlDefault
+To adjust quality, edit changedQuality value.
 
-For example, ytdlChange will be used if URL is Youtube or Twitch, otherwise
-ytdlDefault will be used.
+To enable VP9 codec, change enableVP9 to true.
+
+To change frame rate, adjust FPSLimit, default is 30.
+
+FPS can be more than 30, however it depends on many factors:
+- Can the video stream run that limit?
+- Can your hardware run that limit?
 
 --]]
-
-local ytdlDefault = "bestvideo[fps<=?30][vcodec!=?vp9]+bestaudio/best"
-local ytdlChange = "bestvideo[height<=?480][fps<=?30][vcodec!=?vp9]+bestaudio/best[height<=480]"
-
-local msg = require 'mp.msg'
-local utils = require 'mp.utils'
 
 local function Set (t)
 	local set = {}
@@ -31,16 +23,36 @@ local function Set (t)
 	return set
 end
 
+-- Domains list for custom quality
 local StreamSource = Set {
 	'youtu.be', 'youtube.com', 'www.youtube.com', 
 	'twitch.tv', 'www.twitch.tv'
 }
 
-local function getStreamSource(path)
-	local hostname = path:match '^https?://([^/]+)/' or ''
-	return hostname:match '([%w%.]+%w+)$'
+-- Accepts: 240, 360, 480, 720, 1080, 1440, 2160
+local changedQuality = 720
+
+-- Affects matched and non-matched domains
+local enableVP9 = false
+local FPSLimit = 30
+
+-- Do not edit from here on
+local msg = require 'mp.msg'
+local utils = require 'mp.utils'
+
+local VP9value = ""
+
+if enableVP9 == false then
+	VP9value = "[vcodec!=?vp9]"
 end
 
+local ytdlChange = "bestvideo[height<=?"..changedQuality.."][fps<=?"..FPSLimit.."]"..VP9value.."+bestaudio/best[height<="..changedQuality.."]"
+local ytdlDefault = "bestvideo[fps<=?"..FPSLimit.."]"..VP9value.."+bestaudio/best"
+
+local function getStreamSource(path)
+	local hostname = path:match '^%a+://([^/]+)/' or ''
+	return hostname:match '([%w%.]+%w+)$'
+end
 
 local function ytdlAutoChange(name, value)
 	local path = value
@@ -53,7 +65,6 @@ local function ytdlAutoChange(name, value)
 		msg.info("No domain match, ytdl-format unchanged.")
 	end
 
-	
 	mp.unobserve_property(ytdlAutoChange)
 	msg.info("Finished check, script no longer running.")
 end
@@ -61,7 +72,7 @@ end
 local function ytdlCheck()
 	local path = mp.get_property("path", "")
 	
-	if string.match(string.lower(path), "^(https?://)") then
+	if string.match(string.lower(path), "^(%a+://)") then
 		mp.set_property("ytdl-format", ytdlDefault)
 		msg.info("Current ytdl-format: "..mp.get_property("ytdl-format"))
 		
