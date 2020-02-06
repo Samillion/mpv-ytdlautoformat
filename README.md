@@ -1,20 +1,20 @@
 # mpv-ytdlautoformat
-A simple mpv script to automatically change `ytdl-format` (for youtube-dl), specifically if the URL is Youtube or Twitch.
+A simple mpv script to automatically change `ytdl-format`, specifically if the URL is Youtube or Twitch.
 
 This script supports and works with multi-purpose playlists. For example, if you have a playlist that includes Youtube URLs, Vimeo URLs and local files.
 
-If the URL is Youtube or Twitch, `ytdl-format` is set to: 480p, 30 FPS and no VP9.
+If the URL is Youtube or Twitch, `ytdl-format` is set to: 480p, 30 FPS and no VP9 codec.
 
-Otherwise, `ytdl-format` is set to: Best video quality, 30 FPS and no VP9
+Otherwise, `ytdl-format` is set to: Best video quality, 30 FPS and no VP9 codec.
 
-# Adding More Domains & Adjusting Video Quality
+# Options
 If you would like to add more domains to have `ytdl-format` automatiaclly changed for them, simply add them to the `StreamSource` set.
 
-To adjust quality of matched domains, edit changedQuality value.
+To adjust quality of matched domains, edit `changedQuality` value.
 
 Affects matched and non-matched domains:
-- To enable VP9 codec, change enableVP9 to true.
-- To change frame rate, adjust FPSLimit, default is 30.
+- To enable VP9 codec, change `enableVP9` to `true`.
+- To change frame rate, adjust `FPSLimit`, default is `30`.
 
 FPS can be more than 30, however it depends on some factors:
 - Can the video stream run that limit?
@@ -30,6 +30,8 @@ This script helps you set a lower or a specific quality for some websites, while
 # Changes to mpv configuration made by the script
 The script will override any `ytdl-format` you have set in `mpv.conf` or in commandline to the values you have set within the script.
 
+No files are edited or changed in any way, the script simply changes `ytdl-format` value, so whatever is in `mpv.conf` or CLI is ignored.
+
 # How to install
 Simply place `ytdlautoformat.lua` in the corresponding mpv scripts location of your operating system:
 
@@ -37,6 +39,7 @@ Simply place `ytdlautoformat.lua` in the corresponding mpv scripts location of y
 - Linux: `~/.config/mpv/scripts/` or `/home/USERNAME/.config/mpv/scripts/`
 - Mac: `~/.config/mpv/scripts/` or `/Users/USERNAME/.config/mpv/scripts/`
 
+# How to uninstall
 The script doesn't change or alter configuration in other files, so removing the `ytdlautoformat.lua` script from the mpv scripts folder is all that is needed to uninstall/disable.
 
 # Preview/Demo
