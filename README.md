@@ -16,11 +16,11 @@ Affects matched and non-matched domains:
 - To enable VP9 codec, change `enableVP9` to `true`.
 - To change frame rate, adjust `FPSLimit`, default is `30`.
 
-FPS can be more than 30, however it depends on some factors:
+FPS (frame rate) can be more than 30, however, it depends on some factors:
 - Can the video stream run that limit?
 - Can your hardware run that limit?
 
-That is way frame rate is set to 30 by default, which is the default in most streaming and video websites.
+That is why frame rate is set to 30 by default, which is the default in most streaming and video websites.
 
 # How is this script useful?
 Some streaming websites do not offer multi-quality per video (Openload, for example). So if you have `ytdl-format` in `mpv.conf` set to only play 480p or 720p videos, mpv/youtube-dl will not run it because it cannot find a video with the specified format.
@@ -33,7 +33,7 @@ The script will override any `ytdl-format` you have set in `mpv.conf` or in comm
 No files are edited or changed in any way, the script simply changes `ytdl-format` value, so whatever is in `mpv.conf` or CLI is ignored.
 
 # How to install
-Simply place `ytdlautoformat.lua` in the corresponding mpv scripts location of your operating system:
+Simply place `ytdlautoformat.lua` in the corresponding mpv scripts folder of your operating system:
 
 - Windows: `%APPDATA%\mpv\scripts\` or `C:\users\USERNAME\AppData\Roaming\mpv\scripts\`
 - Linux: `~/.config/mpv/scripts/` or `/home/USERNAME/.config/mpv/scripts/`
