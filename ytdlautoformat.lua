@@ -1,6 +1,6 @@
 --[[
 
-A simple mpv script to automatically change ytdl-format (for youtube-dl)
+A simple mpv script to automatically change ytdl-format (for yt-dlp, youtube-dl)
 specifically if the URL is Youtube or Twitch.
 
 Options:
