@@ -23,7 +23,7 @@ FPS (frame rate) can be more than 30, however, it depends on some factors:
 That is why frame rate is set to 30 by default, which is the default in most streaming and video websites.
 
 # How is this script useful?
-Some streaming websites do not offer multi-quality per video (Openload, for example). So if you have `ytdl-format` in `mpv.conf` set to only play 480p or 720p videos, mpv/youtube-dl will not run it because it cannot find a video with the specified format.
+Some streaming websites do not offer multi-quality per video. So if you have `ytdl-format` in `mpv.conf` set to only play 480p or 720p videos, mpv/youtube-dl or mpv/yt-dlp will not run it because it cannot find a video with the specified format.
 
 This script helps you set a lower or a specific quality for some websites, while leaving the rest as default. That way all video streams will play and you won't have to keep editing `mpv.conf` each time to make it work.
 
