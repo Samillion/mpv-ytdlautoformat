@@ -43,8 +43,8 @@ if enableVP9 == false then
 	VP9value = "[vcodec!=?vp9]"
 end
 
-local ytdlChange = "bestvideo[height<=?"..changedQuality.."][fps<=?"..FPSLimit.."]"..VP9value.."+bestaudio/best[height<="..changedQuality.."]"
-local ytdlDefault = "bestvideo[fps<=?"..FPSLimit.."]"..VP9value.."+bestaudio/best"
+local ytdlChange = "bv[height<=?"..changedQuality.."][fps<=?"..FPSLimit.."]"..VP9value.."+ba/b[height<="..changedQuality.."]"
+local ytdlDefault = "bv[fps<=?"..FPSLimit.."]"..VP9value.."+ba/b"
 
 local function getStreamSource(path)
 	local hostname = path:match '^%a+://([^/]+)/' or ''
