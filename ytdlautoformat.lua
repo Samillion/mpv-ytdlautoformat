@@ -1,6 +1,6 @@
 --[[
 
-A simple mpv script to automatically change ytdl-format (for yt-dlp, youtube-dl)
+A simple mpv script to automatically change ytdl-format (yt-dlp)
 specifically if the URL is Youtube or Twitch.
 
 Options:
@@ -26,7 +26,7 @@ local StreamSource = Set {
 	'twitch.tv', 'www.twitch.tv'
 }
 
--- Accepts: 240, 360, 480, 720, 1080, 1440, 2160
+-- Accepts: 240, 360, 480, 720, 1080, 1440, 2160, 4320
 local changedQuality = 480
 
 -- Affects matched and non-matched domains
