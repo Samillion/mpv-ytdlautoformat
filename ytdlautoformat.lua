@@ -1,13 +1,12 @@
 --[[
 
 A simple mpv script to automatically change ytdl-format (yt-dlp)
-specifically if the URL is Youtube or Twitch.
+specifically if the URL is Youtube or Twitch, by default.
 
 Options:
 - To add more domains, simply add them to the StreamSource set.
 - To adjust quality, edit changedQuality value.
 - To enable VP9 codec, change enableVP9 to true.
-- To change frame rate, adjust FPSLimit, default is 30.
 
 For more details:
 https://github.com/Samillion/mpv-ytdlautoformat
@@ -31,7 +30,6 @@ local changedQuality = 480
 
 -- Affects matched and non-matched domains
 local enableVP9 = false
-local FPSLimit = 30
 
 -- Do not edit from here on
 local msg = require 'mp.msg'
@@ -43,8 +41,8 @@ if enableVP9 == false then
 	VP9value = "[vcodec!=?vp9]"
 end
 
-local ytdlChange = "bv[height<=?"..changedQuality.."][fps<=?"..FPSLimit.."]"..VP9value.."+ba/b[height<="..changedQuality.."]"
-local ytdlDefault = "bv[fps<=?"..FPSLimit.."]"..VP9value.."+ba/b"
+local ytdlChange = "bv[height<=?"..changedQuality.."]"..VP9value.."+ba/b[height<="..changedQuality.."]"
+local ytdlDefault = "bv"..VP9value.."+ba/b"
 
 local function getStreamSource(path)
 	local hostname = path:match '^%a+://([^/]+)/' or ''
