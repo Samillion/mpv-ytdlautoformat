@@ -38,7 +38,8 @@ The script doesn't change or alter configuration in other files, so removing the
 # Preview
 Screenshots of the script running and showing the process to matched domain and a screenshot showing the video stats that it is indeed running in 720p
 
-![Terminal](https://github.com/user-attachments/assets/67f7ccd3-730f-417c-898a-71574408a045)
+![Terminal](https://github.com/user-attachments/assets/9944c623-cb66-452b-8a7e-4f4466b59c91)
 
 
-![Video Stats](https://github.com/user-attachments/assets/cf7c9f78-7648-4027-b528-9354a25ed775)
+![Video Stats](https://github.com/user-attachments/assets/b9eddfec-8949-4ae9-9369-c7a653f81320)
+
