@@ -22,7 +22,7 @@ local domains = {
 -- Accepts: 240, 360, 480, 720, 1080, 1440, 2160, 4320
 local setQuality = 720
 
--- Affects matched and non-matched domains
+-- Should Google's VP9 codec be used if found?
 local enableVP9 = false
 
 -- Do not edit beyond this point
@@ -33,44 +33,38 @@ local function Set (t)
 end
 
 local source = Set(domains)
-
-local msg = require 'mp.msg'
-local utils = require 'mp.utils'
-
 local VP9value = ""
 
 if enableVP9 == false then
 	VP9value = "[vcodec!~='vp0?9']"
 end
 
-local ytdlDefault = "bv"..VP9value.."+ba/b"
 local ytdlCustom = "bv[height<=?"..setQuality.."]"..VP9value.."+ba/b[height<="..setQuality.."]"
 
-local function getSource(path)
-	local hostname = path:match '^%a+://([^/]+)/' or ''
-	return hostname:match '([%w%.]+%w+)$'
-end
+local msg = require 'mp.msg'
+local utils = require 'mp.utils'
 
 local function ytdlAutoChange(name, value)
-	if source[getSource(string.lower(value))] then
-		mp.set_property("ytdl-format", ytdlCustom)
-		msg.info("Domain match found, ytdl-format has been changed.")
-		msg.info("Changed ytdl-format: "..mp.get_property("ytdl-format"))
+	local hostname = value:match '^%a+://([^/]+)/' or ''
+	hostname = hostname:match '([%w%.]+%w+)$'
+	
+	if source[string.lower(hostname)] then
+		mp.set_property('file-local-options/ytdl-format', ytdlCustom)
+		
+		msg.info("Domain match found.")
+		msg.info("Changed ytdl-format to: "..mp.get_property("ytdl-format"))
 	else
 		msg.info("No domain match, ytdl-format unchanged.")
 	end
 
 	mp.unobserve_property(ytdlAutoChange)
-	msg.info("Finished check, script no longer running.")
 end
 
 local function ytdlCheck()
 	local path = mp.get_property("path", "")
 	
 	if string.match(string.lower(path), "^(%a+://)") then
-		mp.set_property("ytdl-format", ytdlDefault)
-		msg.info("Current ytdl-format: "..mp.get_property("ytdl-format"))
-		
+		path = path:gsub('ytdl://', '')		
 		mp.observe_property("path", "string", ytdlAutoChange)
 		msg.info("Observing path to determine ytdlAutoChange status...")
 	else
