@@ -40,10 +40,9 @@ Simply place `ytdlautoformat.lua` in the corresponding mpv scripts folder of you
 The script doesn't change or alter configuration in other files, so removing the `ytdlautoformat.lua` script from the mpv scripts folder is all that is needed to uninstall/disable.
 
 # Preview
-Screenshots of the script running and showing the process to matched domain and a screenshot showing the video stats that it is indeed running in 720p
+Screenshots showing steps the script goes through for a matched domain with a changed quality to `720p`, and an unmatched domain so it plays the default values set by `yt-dlp`.
 
-![Terminal](https://github.com/user-attachments/assets/9944c623-cb66-452b-8a7e-4f4466b59c91)
-
+![Terminal](https://github.com/user-attachments/assets/a54467f1-8059-4469-a90a-35f47d7ef395)
 
 ![Video Stats](https://github.com/user-attachments/assets/b9eddfec-8949-4ae9-9369-c7a653f81320)
 
