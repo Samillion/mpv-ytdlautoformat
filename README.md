@@ -3,14 +3,14 @@ A simple mpv script to automatically change `ytdl-format`, for Youtube and Twitc
 
 This script supports and works with multi-purpose playlists. For example, if you have a playlist that includes Youtube URLs, Vimeo URLs and local files.
 
-If the URL is Youtube or Twitch, `ytdl-format` is set to: 480p, 30 FPS and no VP9 codec (By default, can be changed).
+If the URL is Youtube or Twitch, `ytdl-format` is set to: 720p and no VP9 codec (Can be changed).
 
-Otherwise, `ytdl-format` is set to: Best video quality, 30 FPS and no VP9 codec.
+Otherwise, `ytdl-format` is set to: Best video quality and no VP9 codec.
 
 # Options
-If you would like to add more domains to have `ytdl-format` automatiaclly changed for them, simply add them to the `StreamSource` set.
+If you would like to add more domains to have `ytdl-format` automatiaclly changed for them, simply add them to the `domains` list.
 
-To adjust quality of matched domains, edit `changedQuality` value.
+To adjust quality of matched domains, edit `setQuality` value.
 
 Affects matched and non-matched domains:
 - To enable VP9 codec, change `enableVP9` to `true`.
@@ -36,6 +36,9 @@ Simply place `ytdlautoformat.lua` in the corresponding mpv scripts folder of you
 The script doesn't change or alter configuration in other files, so removing the `ytdlautoformat.lua` script from the mpv scripts folder is all that is needed to uninstall/disable.
 
 # Preview
-A screenshot of the script running and showing process and changes in a playlist.
+Screenshots of the script running and showing the process to matched domain and a screenshot showing the video stats that it is indeed running in 720p
 
-![ytdl-autoformat-demo](https://github.com/Samillion/mpv-ytdlautoformat/assets/17427046/57d132bc-ae4c-4ec5-b924-a61354754466)
+![Terminal](https://github.com/user-attachments/assets/67f7ccd3-730f-417c-898a-71574408a045)
+
+
+![Video Stats](https://github.com/user-attachments/assets/cf7c9f78-7648-4027-b528-9354a25ed775)
