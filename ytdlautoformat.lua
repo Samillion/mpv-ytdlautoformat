@@ -6,14 +6,14 @@ specifically if the URL is Youtube or Twitch, by default.
 Options:
 - To add more domains, simply add them to the domains list.
 - To adjust quality, edit setQuality value.
-- To enable VP9 codec, change enableVP9 to true.
+- To allow VP9 codec, change enableVP9 to true.
 
 For more details:
 https://github.com/Samillion/mpv-ytdlautoformat
 
 --]]
 
--- Domains list for custom quality
+-- Domains list for auto custom quality
 local domains = {
 	'youtu.be', 'youtube.com', 'www.youtube.com', 
 	'twitch.tv', 'www.twitch.tv'
@@ -32,7 +32,8 @@ local function Set (t)
 	return set
 end
 
-local source = Set(domains)
+local msg = require 'mp.msg'
+local utils = require 'mp.utils'
 local VP9value = ""
 
 if enableVP9 == false then
@@ -41,16 +42,13 @@ end
 
 local ytdlCustom = "bv[height<=?"..setQuality.."]"..VP9value.."+ba/b[height<="..setQuality.."]"
 
-local msg = require 'mp.msg'
-local utils = require 'mp.utils'
-
 local function ytdlAutoChange(name, value)
 	local hostname = value:match '^%a+://([^/]+)/' or ''
 	hostname = hostname:match '([%w%.]+%w+)$'
-	
+	local source = Set(domains)
+
 	if source[string.lower(hostname)] then
 		mp.set_property('file-local-options/ytdl-format', ytdlCustom)
-		
 		msg.info("Domain match found.")
 		msg.info("Changed ytdl-format to: "..mp.get_property("ytdl-format"))
 	else
@@ -63,8 +61,7 @@ end
 local function ytdlCheck()
 	local path = mp.get_property("path", "")
 	
-	if string.match(string.lower(path), "^(%a+://)") then
-		path = path:gsub('ytdl://', '')		
+	if string.match(string.lower(path), "^(%a+://)") then	
 		mp.observe_property("path", "string", ytdlAutoChange)
 		msg.info("Observing path to determine ytdlAutoChange status...")
 	else
