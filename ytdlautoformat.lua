@@ -40,7 +40,7 @@ local utils = require 'mp.utils'
 local VP9value = ""
 
 if enableVP9 == false then
-	VP9value = "[vcodec!=?vp9]"
+	VP9value = "[vcodec!~='vp0?9']"
 end
 
 local ytdlDefault = "bv"..VP9value.."+ba/b"
