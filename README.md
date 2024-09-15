@@ -5,7 +5,7 @@ This script supports and works with multi-purpose playlists. For example, if you
 
 If the URL is Youtube or Twitch, `ytdl-format` is set to: 720p and no VP9 codec. (Can be changed)
 
-Otherwise, `ytdl-format` is set as you have it in `mpv.conf` or uses default set by `yt-dlp`.
+Otherwise, `ytdl-format` is set as you have it in `mpv.conf` or uses defaults set by `yt-dlp`.
 
 # Options
 
@@ -14,10 +14,12 @@ Otherwise, `ytdl-format` is set as you have it in `mpv.conf` or uses default set
 
 - To add more matched domains, simply add them to the `domains` list.
 - To adjust quality of matched domains, edit `setQuality` value.
-- To enable VP9 codec for matched domains, change `enableVP9` to `true`.
+- To allow VP9 codec for matched domains, change `enableVP9` to `true`.
 
 > [!TIP]
-> You can set a default value in `mpv.conf` for non-matched domains. For example: `ytdl-format=bv[vcodec!~='vp0?9']+ba/b`. You don't have to, but this gives you more control on all streams you play.
+> You can set a default value in `mpv.conf` for non-matched domains. You don't have to, but this gives you more control on all streams you play.
+>
+> For example: `ytdl-format=bv[vcodec!~='vp0?9']+ba/b`.
 
 # How is this script useful?
 Some streaming websites do not offer multi-quality per video. So if you have `ytdl-format` in `mpv.conf` set to only play 480p or 720p videos, mpv/yt-dlp will not run it because it cannot find a video with the specified format.
