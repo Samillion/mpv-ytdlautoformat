@@ -15,7 +15,7 @@ local domains = {
 }
 
 -- Accepts: 240, 360, 480, 720, 1080, 1440, 2160, 4320
-local setQuality = 480
+local setQuality = 720
 
 -- Should Google's VP9 codec be used if found?
 local enableVP9 = false
@@ -29,13 +29,9 @@ end
 
 local msg = require 'mp.msg'
 local utils = require 'mp.utils'
-local VP9value = ""
 
-if enableVP9 == false then
-	VP9value = "[vcodec!~='vp0?9']"
-end
-
-local ytdlCustom = "bv[height<=?"..setQuality.."]"..VP9value.."+ba/b[height<="..setQuality.."]"
+local VP9 = enableVP9 and "" or "[vcodec!~='vp0?9']"
+local ytdlCustom = "bv[height<=?"..setQuality.."]"..VP9.."+ba/b[height<="..setQuality.."]"
 
 local function ytdlAutoChange(name, value)
 	local hostname = value:match '^%a+://([^/]+)/' or ''
