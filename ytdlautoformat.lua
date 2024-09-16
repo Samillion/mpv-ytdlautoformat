@@ -3,11 +3,6 @@
 A simple mpv script to automatically change ytdl-format (yt-dlp)
 specifically if the URL is Youtube or Twitch, by default.
 
-Options:
-- To add more domains, simply add them to the domains list.
-- To adjust quality, edit setQuality value.
-- To allow VP9 codec, change enableVP9 to true.
-
 For more details:
 https://github.com/Samillion/mpv-ytdlautoformat
 
@@ -20,7 +15,7 @@ local domains = {
 }
 
 -- Accepts: 240, 360, 480, 720, 1080, 1440, 2160, 4320
-local setQuality = 720
+local setQuality = 480
 
 -- Should Google's VP9 codec be used if found?
 local enableVP9 = false
@@ -51,8 +46,6 @@ local function ytdlAutoChange(name, value)
 		mp.set_property('file-local-options/ytdl-format', ytdlCustom)
 		msg.info("Domain match found.")
 		msg.info("Changed ytdl-format to: "..mp.get_property("ytdl-format"))
-	else
-		msg.info("No domain match, ytdl-format unchanged.")
 	end
 
 	mp.unobserve_property(ytdlAutoChange)
@@ -63,9 +56,6 @@ local function ytdlCheck()
 	
 	if string.match(string.lower(path), "^(%a+://)") then	
 		mp.observe_property("path", "string", ytdlAutoChange)
-		msg.info("Observing path to determine ytdlAutoChange status...")
-	else
-		msg.info("Not a URL/Stream, script did not run.")
 	end
 end
 
