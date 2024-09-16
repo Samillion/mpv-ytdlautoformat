@@ -30,15 +30,15 @@ end
 local msg = require 'mp.msg'
 local utils = require 'mp.utils'
 
-local VP9 = enableVP9 and "" or "[vcodec!~='vp0?9']"
-local ytdlCustom = "bv[height<=?"..setQuality.."]"..VP9.."+ba/b[height<="..setQuality.."]"
-
 local function ytdlAutoChange(name, value)
 	local hostname = value:match '^%a+://([^/]+)/' or ''
-	hostname = hostname:match '([%w%.]+%w+)$'
+	hostname = hostname:match '([%w%.]+%w+)$' or ''
 	local source = Set(domains)
 
 	if source[string.lower(hostname)] then
+		local VP9 = enableVP9 and "" or "[vcodec!~='vp0?9']"
+		local ytdlCustom = "bv[height<=?"..setQuality.."]"..VP9.."+ba/b[height<="..setQuality.."]"
+		
 		mp.set_property('file-local-options/ytdl-format', ytdlCustom)
 		msg.info("Domain match found.")
 		msg.info("Changed ytdl-format to: "..mp.get_property("ytdl-format"))
@@ -50,7 +50,7 @@ end
 local function ytdlCheck()
 	local path = mp.get_property("path", "")
 	
-	if string.match(string.lower(path), "^(%a+://)") then	
+	if string.match(path, "^%a+://") then	
 		mp.observe_property("path", "string", ytdlAutoChange)
 	end
 end
