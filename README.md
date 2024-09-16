@@ -1,20 +1,17 @@
 # mpv-ytdlautoformat
-A simple mpv script to automatically change `ytdl-format`, for Youtube and Twitch by default, but more domains can be added as desired.
+A simple mpv script to automatically change `ytdl-format` for Youtube and Twitch by default, but more domains can be added as desired.
 
-This script supports and works with multi-purpose playlists. For example, if you have a playlist that includes Youtube URLs, Vimeo URLs and local files.
+This script works with multi-purpose playlists. For example, if you have a playlist that includes Youtube URLs, Vimeo URLs and local files.
 
-If the URL is Youtube or Twitch, `ytdl-format` is set to: 720p and no VP9 codec. (Can be changed)
-
-Otherwise, `ytdl-format` is set as you have it in `mpv.conf` or uses defaults set by `yt-dlp`.
+If the URL is Youtube or Twitch, `ytdl-format` is set to: 720p and no VP9 codec. Otherwise, `ytdl-format` is set as you have it in `mpv.conf` or uses defaults set by `yt-dlp`.
 
 # Options
-
-> [!NOTE]
-> The following changes only affect matched URLs from the `domains` list.
-
 - To add more matched domains, simply add them to the `domains` list.
 - To adjust quality of matched domains, edit `setQuality` value.
 - To allow VP9 codec for matched domains, change `enableVP9` to `true`.
+
+> [!NOTE]
+> The options only affect matched URLs from the `domains` list.
 
 > [!TIP]
 > You can set a default value in `mpv.conf` for non-matched domains. You don't have to, but this gives you more control on all streams you play.
@@ -42,9 +39,6 @@ Simply place `ytdlautoformat.lua` in the corresponding mpv scripts folder of you
 The script doesn't change or alter configuration in other files, so removing the `ytdlautoformat.lua` script from the mpv scripts folder is all that is needed to uninstall/disable.
 
 # Preview
-Screenshots showing steps the script goes through for a matched domain with a changed quality to `720p`, and an unmatched domain so it plays the default values set by `yt-dlp`.
+Screenshot showing steps the script goes through for a matched domain with a changed quality to `720p` and to not use VP9 codec.
 
-![Terminal](https://github.com/user-attachments/assets/a54467f1-8059-4469-a90a-35f47d7ef395)
-
-![Video Stats](https://github.com/user-attachments/assets/b9eddfec-8949-4ae9-9369-c7a653f81320)
-
+![Terminal](https://github.com/user-attachments/assets/f065cbe1-2458-49f1-b6cc-9ca59695443c)
