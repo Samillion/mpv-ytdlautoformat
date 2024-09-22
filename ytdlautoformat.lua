@@ -30,29 +30,21 @@ end
 local msg = require 'mp.msg'
 local utils = require 'mp.utils'
 
-local function ytdlAutoChange(name, value)
-	local hostname = value:lower():match '^%a+://([^/]+)/?' or ''
-	local domain = hostname:match('([%w%-]+%.%w+%.%w+)$') or hostname:match('([%w%-]+%.%w+)$') or ''
-	local source = Set(domains)
-
-	if source[domain] then
-		local VP9 = enableVP9 and "" or "[vcodec!~='vp0?9']"
-		local ytdlCustom = "bv[height<=?" .. setQuality .. "]" .. VP9 .. "+ba/b[height<=" .. setQuality .. "]"
-		
-		msg.info("Domain match found.")
-		mp.set_property('file-local-options/ytdl-format', ytdlCustom)
-		msg.info("Changed ytdl-format to: " .. mp.get_property("ytdl-format"))
-	end
-
-	mp.unobserve_property(ytdlAutoChange)
-end
-
-local function ytdlCheck()
+mp.add_hook('on_load', 9, function()
 	local path = mp.get_property("path", "")
-	
-	if string.match(path, "^%a+://") then	
-		mp.observe_property("path", "string", ytdlAutoChange)
-	end
-end
 
-mp.register_event("start-file", ytdlCheck)
+	if string.match(path, "^%a+://") then	
+		local hostname = path:lower():match '^%a+://([^/]+)/?' or ''
+		local domain = hostname:match('([%w%-]+%.%w+%.%w+)$') or hostname:match('([%w%-]+%.%w+)$') or ''
+		local source = Set(domains)
+
+		if source[domain] then
+			local VP9 = enableVP9 and "" or "[vcodec!~='vp0?9']"
+			local ytdlCustom = "bv[height<=?" .. setQuality .. "]" .. VP9 .. "+ba/b[height<=" .. setQuality .. "]"
+			
+			msg.info("Domain match found.")
+			mp.set_property('file-local-options/ytdl-format', ytdlCustom)
+			msg.info("Changed ytdl-format to: " .. mp.get_property("ytdl-format"))
+		end
+	end
+end)
