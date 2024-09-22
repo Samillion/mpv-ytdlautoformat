@@ -28,7 +28,6 @@ local function Set (t)
 end
 
 local msg = require 'mp.msg'
-local utils = require 'mp.utils'
 
 mp.add_hook('on_load', 9, function()
 	local path = mp.get_property("path", "")
@@ -36,9 +35,8 @@ mp.add_hook('on_load', 9, function()
 	if string.match(path, "^%a+://") then	
 		local hostname = path:lower():match '^%a+://([^/]+)/?' or ''
 		local domain = hostname:match('([%w%-]+%.%w+%.%w+)$') or hostname:match('([%w%-]+%.%w+)$') or ''
-		local source = Set(domains)
 
-		if source[domain] then
+		if Set(domains)[domain] then
 			local VP9 = enableVP9 and "" or "[vcodec!~='vp0?9']"
 			local ytdlCustom = "bv[height<=?" .. setQuality .. "]" .. VP9 .. "+ba/b[height<=" .. setQuality .. "]"
 			
