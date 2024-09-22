@@ -23,7 +23,7 @@ local enableVP9 = false
 -- Do not edit beyond this point
 local function Set (t)
 	local set = {}
-	for _, v in pairs(t) do set[v] = true end
+	for _, v in pairs(t) do set[string.lower(v)] = true end
 	return set
 end
 
@@ -32,10 +32,10 @@ local utils = require 'mp.utils'
 
 local function ytdlAutoChange(name, value)
 	local hostname = value:lower():match '^%a+://([^/]+)/?' or ''
-    local domain = hostname:match('([%w%-]+%.%w+%.%w+)$') or hostname:match('([%w%-]+%.%w+)$') or ''
+	local domain = hostname:match('([%w%-]+%.%w+%.%w+)$') or hostname:match('([%w%-]+%.%w+)$') or ''
 	local source = Set(domains)
 
-	if source[string.lower(domain)] then
+	if source[domain] then
 		local VP9 = enableVP9 and "" or "[vcodec!~='vp0?9']"
 		local ytdlCustom = "bv[height<=?" .. setQuality .. "]" .. VP9 .. "+ba/b[height<=" .. setQuality .. "]"
 		
