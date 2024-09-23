@@ -23,7 +23,9 @@ local enableVP9 = false
 -- Do not edit beyond this point
 local function Set (t)
 	local set = {}
-	for _, v in pairs(t) do set[string.lower(v)] = true end
+	for _, v in pairs(t) do
+		set[type(v) == "string" and v:lower() or v] = true
+	end
 	return set
 end
 
@@ -32,7 +34,7 @@ local msg = require 'mp.msg'
 mp.add_hook('on_load', 9, function()
 	local path = mp.get_property("path", "")
 
-	if string.match(path, "^%a+://") then	
+	if path:match('^%a+://') then
 		local hostname = path:lower():match '^%a+://([^/]+)/?' or ''
 		local domain = hostname:match('([%w%-]+%.%w+%.%w+)$') or hostname:match('([%w%-]+%.%w+)$') or ''
 
