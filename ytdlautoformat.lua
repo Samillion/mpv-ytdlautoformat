@@ -42,7 +42,7 @@ mp.add_hook('on_load', 9, function()
 			local VP9 = enableVP9 and "" or "[vcodec!~='vp0?9']"
 			local ytdlCustom = "bv[height<=?" .. setQuality .. "]" .. VP9 .. "+ba/b[height<=" .. setQuality .. "]"
 			
-			msg.info("Domain match found.")
+			msg.info("Domain match found: " .. domain)
 			mp.set_property('file-local-options/ytdl-format', ytdlCustom)
 			msg.info("Changed ytdl-format to: " .. mp.get_property("ytdl-format"))
 		end
