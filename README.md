@@ -16,7 +16,11 @@ If the URL is Youtube or Twitch, `ytdl-format` is set to: 720p and no VP9 codec.
 > [!TIP]
 > You can set a default value in `mpv.conf` for non-matched domains. You don't have to, but this gives you more control on all streams you play.
 >
-> For example: `ytdl-format=bv[vcodec!~='vp0?9']+ba/b`.
+> Examples for `mpv.conf`:
+>
+> - `ytdl-format=bv[vcodec!~='vp0?9']+ba/b`
+>
+> - `ytdl-format=bv[height<=1080][vcodec!~='vp0?9']+ba/b[height<=1080]`
 
 # How is this script useful?
 Some streaming websites do not offer multi-quality per video. So if you have `ytdl-format` in `mpv.conf` set to only play 480p or 720p videos, mpv/yt-dlp will not run it because it cannot find a video with the specified format.
@@ -41,4 +45,4 @@ The script doesn't change or alter configuration in other files, so removing the
 # Preview
 Screenshot showing steps the script goes through for a matched domain with a changed quality to `720p` and to not use VP9 codec.
 
-![Terminal](https://github.com/user-attachments/assets/f065cbe1-2458-49f1-b6cc-9ca59695443c)
+![Terminal](https://github.com/user-attachments/assets/ee71a77a-3c0b-43f4-a16d-0de8909669d4)
