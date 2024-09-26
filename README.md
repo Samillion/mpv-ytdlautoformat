@@ -1,12 +1,10 @@
 # mpv-ytdlautoformat
 A simple mpv script to automatically change `ytdl-format` for Youtube and Twitch by default, but more domains can be added as desired.
 
-This script works with multi-purpose playlists. For example, if you have a playlist that includes Youtube URLs, Vimeo URLs and local files.
-
-If the URL is Youtube or Twitch, `ytdl-format` is set to: 720p and no VP9 codec. Otherwise, `ytdl-format` is set as you have it in `mpv.conf` or uses defaults set by `yt-dlp`.
+If a domain match is found, `ytdl-format` is set to: 720p and no VP9 codec. Otherwise, `ytdl-format` is set as you have it in `mpv.conf` or uses defaults from `mpv` or `yt-dlp`.
 
 # Options
-- To add more matched domains, simply add them to the `domains` list.
+- To adjust matched domains, simply edit the `domains` list.
 - To adjust quality of matched domains, edit `setQuality` value.
 - To allow VP9 codec for matched domains, change `enableVP9` to `true`.
 
@@ -28,9 +26,9 @@ Some streaming websites do not offer multi-quality per video. So if you have `yt
 This script helps you set a lower or a specific quality for some websites, while leaving the rest as default. That way all video streams will play and you won't have to keep editing `mpv.conf` each time to make it work.
 
 # Changes to mpv configuration made by the script
-If a URL match is found, the script will override `ytdl-format` you have set in `mpv.conf` or in commandline to the values you have set within the script.
+If a domain match is found, the script will change `ytdl-format` to the values you have set within the script, only for the current playing stream.
 
-No files are edited or changed in any way, the script simply changes `ytdl-format` value, so whatever is in `mpv.conf` or CLI is ignored.
+No files are edited or changed in any way.
 
 # How to install
 Simply place `ytdlautoformat.lua` in the corresponding mpv scripts folder of your operating system:
@@ -52,7 +50,7 @@ config/mpv
 ```
 
 # How to uninstall
-The script doesn't change or alter configuration in other files, so removing the `ytdlautoformat.lua` script from the mpv scripts folder is all that is needed to uninstall/disable.
+The script doesn't change or alter configuration in other files, so removing the `ytdlautoformat.lua` script from the mpv scripts folder is all that is needed to uninstall.
 
 # Preview
 Screenshot showing steps the script goes through for a matched domain with a changed quality to `720p` and to not use VP9 codec.
@@ -62,7 +60,7 @@ Screenshot showing steps the script goes through for a matched domain with a cha
 # Alternatives
 I like to keep my [mpv configuration](https://github.com/Samillion/mpv-conf) simple, that is why I created this script to match my simple usecase.
 
-However, there are solid alternatives that provide more options and on demand, such as:
+However, there are solid alternatives that provide more on demand options, such as:
 - [mpv-selectformat](https://github.com/koonix/mpv-selectformat): mpv plugin for selecting the format of internet videos.
 - [mpv-quality-menu](https://github.com/christoph-heinrich/mpv-quality-menu): Allows you to change the streamed video and audio quality (ytdl-format) on the fly. 
 
