@@ -14,8 +14,8 @@ local options = {
 
     -- Which domains should ytdl-format change on?
     domains = {
-        'youtu.be', 'youtube.com', 'www.youtube.com', 
-        'twitch.tv', 'www.twitch.tv'
+        "youtu.be", "youtube.com", "www.youtube.com", 
+        "twitch.tv", "www.twitch.tv"
     },
 
     -- Should Google's VP9 codec be used if found?
