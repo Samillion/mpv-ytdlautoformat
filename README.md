@@ -4,9 +4,24 @@ A simple mpv script to automatically change `ytdl-format` for Youtube and Twitch
 If a domain match is found, `ytdl-format` is set to: 720p and no VP9 codec. Otherwise, `ytdl-format` is set as you have it in `mpv.conf` or uses defaults from `mpv` or `yt-dlp`.
 
 # Options
-- To adjust matched domains, simply edit the `domains` list.
-- To adjust quality of matched domains, edit `setQuality` value.
-- To allow VP9 codec for matched domains, change `enableVP9` to `true`.
+To adjust options, simply change the values inside `local options` within the script.
+
+```lua
+local options = {
+    -- Set video quality for ytdl-format
+    -- Accepts: 240, 360, 480, 720, 1080, 1440, 2160, 4320
+    quality = 720,
+
+    -- Which domains should ytdl-format change on?
+    domains = {
+        'youtu.be', 'youtube.com', 'www.youtube.com', 
+        'twitch.tv', 'www.twitch.tv'
+    },
+
+    -- Should Google's VP9 codec be used if found?
+    enableVP9 = false
+}
+```
 
 > [!NOTE]
 > The options only affect matched URLs from the `domains` list.
