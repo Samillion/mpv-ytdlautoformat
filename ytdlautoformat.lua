@@ -10,7 +10,7 @@
 
 local options = {
     -- Accepts: 240, 360, 480, 720, 1080, 1440, 2160, 4320
-    quality = 480,
+    quality = 720,
 
     -- Which domains should ytdl-format change on?
     domains = {
