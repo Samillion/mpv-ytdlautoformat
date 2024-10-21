@@ -1,25 +1,26 @@
 # mpv-ytdlautoformat
-A simple mpv script to automatically change `ytdl-format` for Youtube and Twitch by default, but more domains can be added as desired.
+A simple mpv script to automatically change `ytdl-format` (yt-dlp) for specified domains/streams.
 
-If a domain match is found, `ytdl-format` is set to: 720p and no VP9 codec. Otherwise, `ytdl-format` is set as you have it in `mpv.conf` or uses defaults from `mpv` or `yt-dlp`.
+If a domain match is found, `ytdl-format` is set according to the options within the script. Otherwise, `ytdl-format` is set as you have it in `mpv.conf` or uses defaults from `mpv` or `yt-dlp`.
 
 # Options
 To adjust options, simply change the values inside `local options` within the script.
 
 ```lua
 local options = {
-    -- Set video quality for ytdl-format
-    -- Accepts: 240, 360, 480, 720, 1080, 1440, 2160, 4320
-    quality = 720,
-
     -- Which domains should ytdl-format change on?
     domains = {
         "youtu.be", "youtube.com", "www.youtube.com", 
         "twitch.tv", "www.twitch.tv"
     },
 
-    -- Should Google's VP9 codec be used if found?
-    enableVP9 = false
+    -- Set video quality for auto ytdl-format (on load/start)
+    -- 240, 360, 480, 720, 1080, 1440, 2160, 4320
+    quality = 720,
+
+    -- Prefered codec. avc, vp9 or novp9
+    -- novp9: accept any codec except vp9
+    codec = "avc"
 }
 ```
 
