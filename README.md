@@ -1,5 +1,5 @@
-# mpv-ytdlautoformat
-A simple mpv script to automatically change `ytdl-format` (yt-dlp) for specified domains/streams.
+# mpv-ytdlAutoFormat
+A simple mpv script to automatically change `ytdl-format` (yt-dlp) for specified domains.
 
 If a domain match is found, `ytdl-format` is set according to the options within the script. Otherwise, `ytdl-format` is set as you have it in `mpv.conf` or uses defaults from `mpv` or `yt-dlp`.
 
