@@ -1,4 +1,6 @@
 # mpv-ytdlAutoFormat
+![Terminal](https://github.com/user-attachments/assets/ee71a77a-3c0b-43f4-a16d-0de8909669d4)
+
 A simple mpv script to automatically change `ytdl-format` (yt-dlp) for specified domains.
 
 If a domain match is found, `ytdl-format` is set according to the options within the script. Otherwise, `ytdl-format` is set as you have it in `mpv.conf` or uses defaults from `mpv` or `yt-dlp`.
@@ -67,11 +69,6 @@ config/mpv
 
 # How to uninstall
 The script doesn't change or alter configuration in other files, so removing the `ytdlautoformat.lua` script from the mpv scripts folder is all that is needed to uninstall.
-
-# Preview
-Screenshot showing steps the script goes through for a matched domain with a changed quality to `720p` and to not use VP9 codec.
-
-![Terminal](https://github.com/user-attachments/assets/ee71a77a-3c0b-43f4-a16d-0de8909669d4)
 
 # Alternatives
 I like to keep my [mpv configuration](https://github.com/Samillion/mpv-conf) simple, that is why I created this script to match my simple usecase.
