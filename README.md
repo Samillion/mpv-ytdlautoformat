@@ -1,9 +1,14 @@
 # mpv-ytdlAutoFormat
 ![Terminal](https://github.com/user-attachments/assets/ee71a77a-3c0b-43f4-a16d-0de8909669d4)
 
-A simple mpv script to automatically change `ytdl-format` (yt-dlp) for specified domains.
+A simple mpv script that automatically adjusts `ytdl-format` (yt-dlp) for specified domains.
 
-If a domain match is found, `ytdl-format` is set according to the options within the script. Otherwise, `ytdl-format` is set as you have it in `mpv.conf` or uses defaults from `mpv` or `yt-dlp`.
+If a domain match is found, the script sets `ytdl-format` based on predefined options. Otherwise, it defaults to the settings in `mpv.conf` or falls back to the default behavior of mpv or yt-dlp.
+
+# How is this script useful?
+Some streaming websites lack multi-quality video options, meaning if `ytdl-format` in `mpv.conf` is set to 480p or 720p only, mpv/yt-dlp may fail to play videos without matching formats.
+
+This script allows you to define lower or specific video qualities for certain websites while keeping the default setting for others, ensuring smooth playback without constantly editing `mpv.conf`.
 
 # Options
 To adjust options, simply change the values inside `local options` within the script.
@@ -38,16 +43,6 @@ local options = {
 >
 > - `ytdl-format=bv[height<=1080][vcodec!~='vp0?9']+ba/b[height<=1080]`
 
-# How is this script useful?
-Some streaming websites do not offer multi-quality per video. So if you have `ytdl-format` in `mpv.conf` set to only play 480p or 720p videos, mpv/yt-dlp will not run it because it cannot find a video with the specified format.
-
-This script helps you set a lower or a specific quality for some websites, while leaving the rest as default. That way all video streams will play and you won't have to keep editing `mpv.conf` each time to make it work.
-
-# Changes to mpv configuration made by the script
-If a domain match is found, the script will change `ytdl-format` to the values you have set within the script, only for the current playing stream.
-
-No files are edited or changed in any way.
-
 # How to install
 Simply place `ytdlautoformat.lua` in the corresponding mpv scripts folder of your operating system:
 
@@ -67,14 +62,11 @@ config/mpv
         ytdlautoformat.lua
 ```
 
-# How to uninstall
-The script doesn't change or alter configuration in other files, so removing the `ytdlautoformat.lua` script from the mpv scripts folder is all that is needed to uninstall.
-
 # Alternatives
 I like to keep my [mpv configuration](https://github.com/Samillion/mpv-conf) simple, that is why I created this script to match my simple usecase.
 
 However, there are solid alternatives that provide more on demand options, such as:
-- [mpv-selectformat](https://github.com/koonix/mpv-selectformat): mpv plugin for selecting the format of internet videos.
 - [mpv-quality-menu](https://github.com/christoph-heinrich/mpv-quality-menu): Allows you to change the streamed video and audio quality (ytdl-format) on the fly. 
+- [mpv-selectformat](https://github.com/koonix/mpv-selectformat): mpv plugin for selecting the format of internet videos.
 
 They can be added alongside `ytdlautoformat.lua` as there are no conflicts between them.
