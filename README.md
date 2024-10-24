@@ -1,16 +1,16 @@
-# mpv-ytdlAutoFormat
+## mpv-ytdlAutoFormat
 ![Terminal](https://github.com/user-attachments/assets/ee71a77a-3c0b-43f4-a16d-0de8909669d4)
 
 A simple mpv script that automatically adjusts `ytdl-format` (yt-dlp) for specified domains.
 
 If a domain match is found, the script sets `ytdl-format` based on predefined options. Otherwise, it defaults to the settings in `mpv.conf` or falls back to the default behavior of mpv or yt-dlp.
 
-# How is this script useful?
+## How is this script useful?
 Some streaming websites lack multi-quality video options, meaning if `ytdl-format` in `mpv.conf` is set to 480p or 720p only, mpv/yt-dlp may fail to play videos without matching formats.
 
 This script allows you to define lower or specific video qualities for certain websites while keeping the default setting for others, ensuring smooth playback without constantly editing `mpv.conf`.
 
-# Options
+## Options
 To adjust options, simply change the values inside `local options` within the script.
 
 ```lua
@@ -43,7 +43,7 @@ local options = {
 >
 > - `ytdl-format=bv[height<=1080][vcodec!~='vp0?9']+ba/b[height<=1080]`
 
-# How to install
+## How to install
 Simply place `ytdlautoformat.lua` in the corresponding mpv scripts folder of your operating system:
 
 - Windows: `%APPDATA%\mpv\scripts\` or `C:\users\USERNAME\AppData\Roaming\mpv\scripts\`
@@ -62,11 +62,11 @@ config/mpv
         ytdlautoformat.lua
 ```
 
-# Alternatives
-I like to keep my [mpv configuration](https://github.com/Samillion/mpv-conf) simple, that is why I created this script to match my simple usecase.
+## Alternatives
+I prefer a simple [mpv configuration](https://github.com/Samillion/mpv-conf), so I created this script to fit my basic use case.
 
-However, there are solid alternatives that provide more on demand options, such as:
-- [mpv-quality-menu](https://github.com/christoph-heinrich/mpv-quality-menu): Allows you to change the streamed video and audio quality (ytdl-format) on the fly. 
-- [mpv-selectformat](https://github.com/koonix/mpv-selectformat): mpv plugin for selecting the format of internet videos.
+However, there are excellent alternatives offering more dynamic options, such as:
+- [mpv-quality-menu](https://github.com/christoph-heinrich/mpv-quality-menu): Lets you change streamed video and audio quality (ytdl-format) on the fly.
+- [mpv-selectformat](https://github.com/koonix/mpv-selectformat): Plugin for selecting the format of internet videos.
 
-They can be added alongside `ytdlautoformat.lua` as there are no conflicts between them.
+These can be used alongside `ytdlautoformat.lua` without conflicts.
