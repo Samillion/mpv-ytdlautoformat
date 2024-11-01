@@ -3,12 +3,12 @@
 
 A simple mpv script that automatically adjusts `ytdl-format` (yt-dlp) for specified domains.
 
-If a domain match is found, the script sets `ytdl-format` based on predefined options. Otherwise, it defaults to the settings in `mpv.conf` or falls back to the default behavior of mpv or yt-dlp.
+If a domain match is found, the script sets `ytdl-format` based on predefined options. It also has a fallback mode, in case the custom `ytdl-format` was not found.
 
 ## How is this script useful?
-Some streaming websites lack multi-quality video options, meaning if `ytdl-format` in `mpv.conf` is set to 480p or 720p only, mpv/yt-dlp may fail to play videos without matching formats.
+Some streaming websites lack multi-format options, meaning if `ytdl-format` in `mpv.conf` is set to 480p or 720p only, mpv/yt-dlp may fail to play videos without matching formats.
 
-This script allows you to define lower or specific video qualities for certain websites while keeping the default setting for others, ensuring smooth playback without constantly editing `mpv.conf`.
+This script allows you to set video quality and codec for specific websites while keeping the default setting for others, ensuring smooth playback without constantly editing `mpv.conf`.
 
 ## Options
 To adjust options, simply change the values inside `local options` within the script.
@@ -21,13 +21,19 @@ local options = {
         "twitch.tv", "www.twitch.tv"
     },
 
-    -- Set video quality for auto ytdl-format (on load/start)
+    -- Set maximum video quality (on load/start)
     -- 240, 360, 480, 720, 1080, 1440, 2160, 4320
+    -- use 0 to ignore quality
     quality = 720,
 
-    -- Prefered codec. avc, vp9 or novp9
+    -- Prefered codec. avc, hevc, vp9, av1 or novp9
     -- novp9: accept any codec except vp9
-    codec = "avc"
+    codec = "avc",
+
+    -- rare: to avoid mpv shutting down if nothing is found with the specified format
+    -- if true, and format not found, it'll use fallback_format
+    fallback = true,
+    fallback_format = "bv+ba/b",
 }
 ```
 
@@ -39,9 +45,9 @@ local options = {
 >
 > Examples for `mpv.conf`:
 >
-> - `ytdl-format=bv[vcodec!~='vp0?9']+ba/b`
+> - `ytdl-format=bv[vcodec!~='^(vp0?9)']+ba/b`
 >
-> - `ytdl-format=bv[height<=1080][vcodec!~='vp0?9']+ba/b[height<=1080]`
+> - `ytdl-format=bv[height<=1080][vcodec!~='^(vp0?9)']+ba/b[height<=1080]`
 
 ## How to install
 Simply place `ytdlautoformat.lua` in the corresponding mpv scripts folder of your operating system:
