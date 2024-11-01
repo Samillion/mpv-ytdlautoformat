@@ -14,13 +14,19 @@ local options = {
         "twitch.tv", "www.twitch.tv"
     },
 
-    -- Set video quality for auto ytdl-format (on load/start)
+    -- Set maximum video quality (on load/start)
     -- 240, 360, 480, 720, 1080, 1440, 2160, 4320
+    -- use 0 to ignore quality
     quality = 720,
 
-    -- Prefered codec. avc, vp9 or novp9
+    -- Prefered codec. avc, hevc, vp9, av1 or novp9
     -- novp9: accept any codec except vp9
-    codec = "avc"
+    codec = "avc",
+
+    -- rare: to avoid mpv shutting down if nothing is found with the specified format
+    -- if true, and format not found, it'll use fallback_format
+    fallback = true,
+    fallback_format = "bv+ba/b",
 }
 
 -- Do not edit beyond this point
@@ -34,14 +40,18 @@ end
 
 local function update_ytdl_format()
     local codec_list = {
-        ["avc"] = "[vcodec^='avc']",
-        ["vp9"] = "[vcodec^='vp0?9']",
-        ["novp9"] = "[vcodec!~='vp0?9']"
+        ["avc"] = "[vcodec~='^(avc|h264)']",
+        ["hevc"] = "[vcodec~='^(hevc|h265)']",
+        ["vp9"] = "[vcodec~='^(vp0?9)']",
+        ["av1"] = "[vcodec~='^(av01)']",
+        ["novp9"] = "[vcodec!~='^(vp0?9)']",
     }
+    local quality = options.quality > 0 and "[height<=?" .. options.quality .. "]" or options.quality == 0 and "" or ""
     local codec = codec_list[options.codec:lower()] or ""
-    local ytdlCustom = "bv[height<=?" .. options.quality .. "]" .. codec .. "+ba/b[height<=" .. options.quality .. "]"
-    mp.set_property("file-local-options/ytdl-format", ytdlCustom)
-    mp.msg.info("Changed ytdl-format to: " .. ytdlCustom)
+    local fallback = options.fallback and " / " .. options.fallback_format or ""
+    local ytdl_custom = "bv" .. quality .. codec .. "+ba/b" .. quality .. fallback
+    mp.set_property("file-local-options/ytdl-format", ytdl_custom)
+    mp.msg.info("Changed ytdl-format to: " .. ytdl_custom)
 end
 
 local msg = require "mp.msg"
