@@ -10,8 +10,8 @@
 local options = {
     -- Which domains should ytdl-format change on?
     domains = {
-        "youtu.be", "youtube.com", "www.youtube.com", 
-        "twitch.tv", "www.twitch.tv"
+        "youtu.be", "youtube.com", "www.youtube.com",
+        "twitch.tv", "www.twitch.tv",
     },
 
     -- Set maximum video quality (on load/start)
@@ -30,9 +30,11 @@ local options = {
 }
 
 -- Do not edit beyond this point
-local function Set(t)
+local msg = require "mp.msg"
+
+local function create_set(list)
     local set = {}
-    for _, v in pairs(t) do
+    for _, v in pairs(list) do
         set[type(v) == "string" and v:lower() or v] = true
     end
     return set
@@ -46,16 +48,15 @@ local function update_ytdl_format()
         ["av1"] = "[vcodec~='^(av01)']",
         ["novp9"] = "[vcodec!~='^(vp0?9)']",
     }
-    local quality = options.quality > 0 and "[height<=?" .. options.quality .. "]" or options.quality == 0 and "" or ""
+    local quality = options.quality > 0 and "[height<=?" .. options.quality .. "]" or ""
     local codec = codec_list[options.codec:lower()] or ""
     local fallback = options.fallback and " / " .. options.fallback_format or ""
     local ytdl_custom = "bv" .. quality .. codec .. "+ba/b" .. quality .. fallback
     mp.set_property("file-local-options/ytdl-format", ytdl_custom)
-    mp.msg.info("Changed ytdl-format to: " .. ytdl_custom)
+    msg.info("Changed ytdl-format to: " .. ytdl_custom)
 end
 
-local msg = require "mp.msg"
-local list = Set(options.domains)
+local list = create_set(options.domains)
 
 mp.add_hook("on_load", 9, function()
     local path = mp.get_property("path", "")
