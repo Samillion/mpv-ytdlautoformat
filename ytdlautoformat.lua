@@ -48,10 +48,15 @@ local function update_ytdl_format()
         ["av1"] = "[vcodec~='^(av01)']",
         ["novp9"] = "[vcodec!~='^(vp0?9)']",
     }
-    local quality = options.quality > 0 and "[height<=?" .. options.quality .. "]" or ""
-    local codec = codec_list[options.codec:lower()] or ""
-    local fallback = options.fallback and " / " .. options.fallback_format or ""
-    local ytdl_custom = "bv" .. quality .. codec .. "+ba/b" .. quality .. fallback
+
+    local format = {
+        quality = options.quality > 0 and "[height<=?" .. options.quality .. "]" or "",
+        codec = codec_list[options.codec:lower()] or "",
+        fallback = options.fallback and " / " .. options.fallback_format or "",
+    }
+
+    local ytdl_custom = "bv" .. format.quality .. format.codec .. "+ba/b" .. format.quality .. format.fallback
+
     mp.set_property("file-local-options/ytdl-format", ytdl_custom)
     msg.info("Changed ytdl-format to: " .. ytdl_custom)
 end
