@@ -17,8 +17,8 @@ To adjust options, simply change the values inside `local options` within the sc
 local options = {
     -- Which domains should ytdl-format change on?
     domains = {
-        "youtu.be", "youtube.com", "www.youtube.com", 
-        "twitch.tv", "www.twitch.tv"
+        "youtu.be", "youtube.com", "www.youtube.com",
+        "twitch.tv", "www.twitch.tv",
     },
 
     -- Set maximum video quality (on load/start)
