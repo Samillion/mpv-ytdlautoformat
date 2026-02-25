@@ -1,5 +1,5 @@
 ## mpv-ytdlAutoFormat
-![Terminal](https://github.com/user-attachments/assets/ee71a77a-3c0b-43f4-a16d-0de8909669d4)
+![Terminal](https://github.com/user-attachments/assets/e79c8c91-ca09-437f-93a4-1a2bfe01dbf0)
 
 A simple mpv script that automatically adjusts `ytdl-format` (yt-dlp) for specified domains.
 
@@ -11,30 +11,30 @@ Some streaming websites lack multi-format options, meaning if `ytdl-format` in `
 This script allows you to set video quality and codec for specific websites while keeping the default setting for others, ensuring smooth playback without constantly editing `mpv.conf`.
 
 ## Options
-To adjust options, simply change the values inside `local options` within the script.
+To adjust options, simply change the values inside `ytdlautoformat.conf` (recommended) or adjust `local options` within the script.
 
-```lua
-local options = {
-    -- Which domains should ytdl-format change on?
-    domains = {
-        "youtu.be", "youtube.com", "www.youtube.com",
-        "twitch.tv", "www.twitch.tv",
-    },
+```EditorConfig
+# which domains should ytdl-format change on?
+# separate each domain with a comma
+domains=youtu.be, youtube.com, www.youtube.com, twitch.tv, www.twitch.tv
 
-    -- Set maximum video quality (on load/start)
-    -- 240, 360, 480, 720, 1080, 1440, 2160, 4320
-    -- use 0 to ignore quality
-    quality = 720,
+# set maximum video quality (on load/start)
+# 240, 360, 480, 720, 1080, 1440, 2160, 4320
+# use 0 to ignore quality
+quality=720
 
-    -- Prefered codec. avc, hevc, vp9, av1 or novp9
-    -- novp9: accept any codec except vp9
-    codec = "avc",
+# prefered codec. avc, hevc, vp9, av1 or novp9
+# novp9: accept any codec except vp9
+codec=avc
 
-    -- rare: to avoid mpv shutting down if nothing is found with the specified format
-    -- if true, and format not found, it'll use fallback_format
-    fallback = true,
-    fallback_format = "bv+ba/b",
-}
+# rare: to avoid mpv shutting down if nothing is found with the specified format
+# if true, and format not found, it'll use fallback_format
+fallback=yes
+fallback_format=bv+ba/b
+
+# regex to detect urls
+# a simpler pattern: ^%a+://
+url_pattern=^[%a][%a%d+.-]*://
 ```
 
 > [!NOTE]
@@ -59,14 +59,13 @@ Simply place `ytdlautoformat.lua` in the corresponding mpv scripts folder of you
 > [!NOTE]
 > More information about files locations can be found  [here](https://mpv.io/manual/master/#files)
 
-```
-config/mpv
-│   input.conf
-│   mpv.conf
-│
-└───scripts
-        ytdlautoformat.lua
-```
+   ```
+   📁 mpv/
+   ├── 📁 script-opts/
+   │   └── 📄 ytdlautoformat.conf
+   └── 📁 scripts/
+       └── 📄 ytdlautoformat.lua
+   ```
 
 ## Alternatives
 I prefer a simple [mpv configuration](https://github.com/Samillion/mpv-conf), so I created this script to fit my basic use case.
