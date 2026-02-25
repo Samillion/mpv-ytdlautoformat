@@ -69,7 +69,6 @@ local function update_ytdl_format()
         end
     end
 
-
     -- why not just place them directly instead of making a list?
     -- because it's fancy and looks cool!
     local format = {
