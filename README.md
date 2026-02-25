@@ -59,13 +59,13 @@ Simply place `ytdlautoformat.lua` in the corresponding mpv scripts folder of you
 > [!NOTE]
 > More information about files locations can be found  [here](https://mpv.io/manual/master/#files)
 
-   ```
-   📁 mpv/
-   ├── 📁 script-opts/
-   │   └── 📄 ytdlautoformat.conf
-   └── 📁 scripts/
-       └── 📄 ytdlautoformat.lua
-   ```
+```
+📁 mpv/
+├── 📁 script-opts/
+│   └── 📄 ytdlautoformat.conf
+└── 📁 scripts/
+    └── 📄 ytdlautoformat.lua
+```
 
 ## Alternatives
 I prefer a simple [mpv configuration](https://github.com/Samillion/mpv-conf), so I created this script to fit my basic use case.
