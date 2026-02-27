@@ -19,8 +19,15 @@ local options = {
 
     -- Prefered codec. avc, hevc, vp9, av1 or novp9
     -- novp9: accept any codec except vp9
-    codec = "avc",
-
+    -- dash: prefer DASH formats
+    -- none: no codec preference (best quality)
+    -- All codecs will be restricted to MP4 container
+    codec = "dash",
+# prefered codec. avc, hevc, vp9, av1, novp9, dash, or none
+# novp9: accept any codec except vp9
+# none/dash: no codec preference (best quality)
+# all codecs will be restricted to MP4 container
+codec=dash
     -- rare: to avoid mpv shutting down if nothing is found with the specified format
     -- if true, and format not found, it'll use fallback_format
     fallback = true,
@@ -51,11 +58,13 @@ end
 
 local function update_ytdl_format()
     local codec_list = {
-        ["avc"] = "[vcodec~='^(avc|h264)']",
-        ["hevc"] = "[vcodec~='^(hevc|h265)']",
-        ["vp9"] = "[vcodec~='^(vp0?9)']",
-        ["av1"] = "[vcodec~='^(av01)']",
-        ["novp9"] = "[vcodec!~='^(vp0?9)']",
+        ["avc"] = "[vcodec~='^(avc|h264)'][ext=mp4]",
+        ["hevc"] = "[vcodec~='^(hevc|h265)'][ext=mp4]",
+        ["vp9"] = "[vcodec~='^(vp0?9)'][ext=mp4]",
+        ["av1"] = "[vcodec~='^(av01)'][ext=mp4]",
+        ["novp9"] = "[vcodec!~='^(vp0?9)'][ext=mp4]",
+        ["dash"] = "[format_note*=dash][ext=mp4]",
+        ["none"] = "[ext=mp4]",
     }
 
     -- codec validation. not the most important
