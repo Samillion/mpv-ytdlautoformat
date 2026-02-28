@@ -1,5 +1,5 @@
 ## mpv-ytdlAutoFormat
-![Terminal](https://github.com/user-attachments/assets/e79c8c91-ca09-437f-93a4-1a2bfe01dbf0)
+![Terminal](https://github.com/user-attachments/assets/bed718af-cf10-4c14-af11-fd1708b6dd26)
 
 A simple mpv script that automatically adjusts `ytdl-format` (yt-dlp) for specified domains.
 
@@ -16,21 +16,31 @@ To adjust options, simply change the values inside `ytdlautoformat.conf` (recomm
 ```EditorConfig
 # which domains should ytdl-format change on?
 # separate each domain with a comma
-domains=youtu.be, youtube.com, www.youtube.com, twitch.tv, www.twitch.tv
+domains=youtu.be, youtube.com, twitch.tv
 
 # set maximum video quality (on load/start)
 # 240, 360, 480, 720, 1080, 1440, 2160, 4320
 # use 0 to ignore quality
 quality=720
 
-# prefered codec. avc, hevc, vp9, av1 or novp9
+# prefered codec. avc, hevc, vp9, av1, novp9, none
 # novp9: accept any codec except vp9
+# none: no codec preference
 codec=avc
+
+# maximum video fps
+# set 0 to ignore
+fps=0
+
+# force a specific extension
+force_extension=no
+extension_type=mp4
 
 # rare: to avoid mpv shutting down if nothing is found with the specified format
 # if true, and format not found, it'll use fallback_format
 fallback=yes
-fallback_format=bv+ba/b
+# an alternative: bv+ba/b
+fallback_format=b
 
 # regex to detect urls
 # a simpler pattern: ^%a+://
@@ -56,9 +66,6 @@ Simply place `ytdlautoformat.lua` in the corresponding mpv scripts folder of you
 - Linux: `~/.config/mpv/scripts/` or `/home/USERNAME/.config/mpv/scripts/`
 - Mac: `~/.config/mpv/scripts/` or `/Users/USERNAME/.config/mpv/scripts/`
 
-> [!NOTE]
-> More information about files locations can be found  [here](https://mpv.io/manual/master/#files)
-
 ```
 📁 mpv/
 ├── 📁 script-opts/
@@ -66,6 +73,9 @@ Simply place `ytdlautoformat.lua` in the corresponding mpv scripts folder of you
 └── 📁 scripts/
     └── 📄 ytdlautoformat.lua
 ```
+
+> [!NOTE]
+> More information about files locations can be found  [here](https://mpv.io/manual/master/#files)
 
 ## Alternatives
 I prefer a simple [mpv configuration](https://github.com/Samillion/mpv-conf), so I created this script to fit my basic use case.
