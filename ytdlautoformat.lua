@@ -36,6 +36,9 @@ local options = {
     -- an alternative: bv+ba/b
     fallback_format = "b",
 
+    -- respect manual format changes (ie: by a quality selector script)
+    respect_manual_changes = true,
+
     -- regex to detect urls
     -- a simpler pattern: "^%a+://"
     url_pattern = "^[%a][%a%d+.-]*://",
@@ -44,6 +47,13 @@ local options = {
 -- do not edit beyond this point
 local msg = require "mp.msg"
 require 'mp.options'.read_options(options, "ytdlautoformat")
+
+-- manual change detection states
+local state = {
+    last_url           = nil,   -- the url last used
+    last_format        = nil,   -- the format last applied
+    external_override  = false, -- ytdl-format changed externally
+}
 
 local function domain_matches(hostname, domains)
     hostname = hostname:lower()
@@ -90,9 +100,22 @@ local function update_ytdl_format()
 
     local ytdl_custom = "bv" .. format.quality .. format.codec .. format.fps .. format.ext .. "+ba/b" .. format.fallback
 
+    state.last_format       = ytdl_custom
+    state.external_override = false
+
     mp.set_property("file-local-options/ytdl-format", ytdl_custom)
     msg.info("ytdl-format => " .. ytdl_custom)
 end
+
+-- observe ytdl-format property for manual changes
+mp.observe_property("ytdl-format", "string", function(_, value)
+    if not options.respect_manual_changes then return end
+
+    if state.last_format == nil then return end
+
+    -- did a manual change occur
+    state.external_override = value ~= state.last_format
+end)
 
 mp.add_hook("on_load", 9, function()
     local path = mp.get_property("path", "")
@@ -101,6 +124,20 @@ mp.add_hook("on_load", 9, function()
         local hostname = path:lower():match("^%a+://([^/:]+)") or ""
 
         if domain_matches(hostname, options.domains) then
+            if options.respect_manual_changes then
+                if path == state.last_url and state.external_override then
+                    -- same url and format manually changed, stop ytdlautoformat
+                    msg.info("Manual format change for " .. hostname .. ", skipping override")
+                    return
+                end
+
+                -- new url
+                if path ~= state.last_url then
+                    state.external_override = false
+                end
+            end
+
+            state.last_url = path
             msg.info("Domain match found: " .. hostname)
             update_ytdl_format()
         end

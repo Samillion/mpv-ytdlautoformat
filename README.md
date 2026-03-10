@@ -42,6 +42,9 @@ fallback=yes
 # an alternative: bv+ba/b
 fallback_format=b
 
+# respect manual format changes (ie: by a quality selector script)
+respect_manual_changes=yes
+
 # regex to detect urls
 # a simpler pattern: ^%a+://
 url_pattern=^[%a][%a%d+.-]*://
