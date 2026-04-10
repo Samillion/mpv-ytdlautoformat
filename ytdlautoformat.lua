@@ -17,10 +17,10 @@ local options = {
     -- use 0 to ignore quality
     quality = 720,
 
-    -- prefered codec. avc, hevc, vp9, av1, novp9, none
-    -- novp9: accept any codec except vp9
+    -- preferred codec: avc, hevc, vp9, av1, novp9, noav1, none
+    -- novp9/av1: accept any codec except vp9/av1
     -- none: no codec preference
-    codec = "avc",
+    codec = "none",
 
     -- maximum video fps
     -- set 0 to ignore
@@ -48,6 +48,44 @@ local options = {
 local msg = require "mp.msg"
 require 'mp.options'.read_options(options, "ytdlautoformat")
 
+local codec_list = {
+    ["avc"]   = "[vcodec~='^(avc|h264)']",
+    ["hevc"]  = "[vcodec~='^(hevc|h265)']",
+    ["vp9"]   = "[vcodec~='^(vp0?9)']",
+    ["av1"]   = "[vcodec~='^(av01)']",
+    ["novp9"] = "[vcodec!~='^(vp0?9)']",
+    ["noav1"] = "[vcodec!~='^(av01)']",
+    ["none"]  = "",
+}
+
+local codec_key = options.codec:lower()
+if codec_key ~= "" and not codec_list[codec_key] then
+    msg.warn("Unknown codec: " .. options.codec .. ". No codec filter applied.")
+end
+
+local valid_qualities = {0, 240, 360, 480, 720, 1080, 1440, 2160, 4320}
+local function is_valid_quality(q)
+    for _, v in ipairs(valid_qualities) do
+        if v == q then return true end
+    end
+    return false
+end
+
+if not is_valid_quality(options.quality) then
+    msg.warn("Unusual quality value: " .. options.quality .. ". Ignoring.")
+    options.quality = 0
+end
+
+if options.fps < 0 then
+    msg.warn("fps cannot be negative, ignoring")
+    options.fps = 0
+end
+
+local domain_list = {}
+for domain in string.gmatch(options.domains, '([^,]+)') do
+    domain_list[#domain_list + 1] = domain:match("^%s*(.-)%s*$"):lower()
+end
+
 -- manual change detection states
 local state = {
     last_url           = nil,   -- the url last used
@@ -55,14 +93,12 @@ local state = {
     external_override  = false, -- ytdl-format changed externally
 }
 
-local function domain_matches(hostname, domains)
+local function domain_matches(hostname)
     hostname = hostname:lower()
 
-    for domain in string.gmatch(domains, '([^,]+)') do
-        domain = domain:match("^%s*(.-)%s*$"):lower()
-
+    for _, domain in ipairs(domain_list) do
         if hostname == domain or
-           hostname:sub(-( #domain + 1 )) == "." .. domain then
+           hostname:sub(-(#domain + 1)) == "." .. domain then
             return true
         end
     end
@@ -70,23 +106,7 @@ local function domain_matches(hostname, domains)
 end
 
 local function update_ytdl_format()
-    local codec_list = {
-        ["avc"]   = "[vcodec~='^(avc|h264)']",
-        ["hevc"]  = "[vcodec~='^(hevc|h265)']",
-        ["vp9"]   = "[vcodec~='^(vp0?9)']",
-        ["av1"]   = "[vcodec~='^(av01)']",
-        ["novp9"] = "[vcodec!~='^(vp0?9)']",
-        ["none"]  = "",
-    }
-
-    -- codec validation. not the most important
-    -- but to inform user of unknown or misconfiguration
-    local key = type(options.codec) == "string" and options.codec:lower() or ""
-    local selected_codec = codec_list[key] or ""
-    if key ~= "" and not codec_list[key] then
-        msg.warn("Unknown codec: " .. tostring(options.codec) .. ". Using AVC instead")
-        selected_codec = codec_list["avc"]
-    end
+    local selected_codec = codec_list[codec_key] or ""
 
     -- why not just place them directly instead of making a list?
     -- because it's fancy and looks cool!
@@ -99,9 +119,7 @@ local function update_ytdl_format()
     }
 
     local ytdl_custom = "bv" .. format.quality .. format.codec .. format.fps .. format.ext .. "+ba/b" .. format.fallback
-
-    state.last_format       = ytdl_custom
-    state.external_override = false
+    state.last_format = ytdl_custom
 
     mp.set_property("file-local-options/ytdl-format", ytdl_custom)
     msg.info("ytdl-format => " .. ytdl_custom)
@@ -123,22 +141,25 @@ mp.add_hook("on_load", 9, function()
     if path:match(options.url_pattern) then
         local hostname = path:lower():match("^%a+://([^/:]+)") or ""
 
-        if domain_matches(hostname, options.domains) then
+        if hostname == "" then return end
+
+        if domain_matches(hostname) then
+            msg.info("Domain match: " .. hostname)
+
             if options.respect_manual_changes then
                 if path == state.last_url and state.external_override then
                     -- same url and format manually changed, stop ytdlautoformat
-                    msg.info("Manual format change for " .. hostname .. ", skipping override")
+                    msg.info("Manual format override active, skipping")
                     return
                 end
 
-                -- new url
+                -- new url, reset override state
                 if path ~= state.last_url then
                     state.external_override = false
                 end
             end
 
             state.last_url = path
-            msg.info("Domain match found: " .. hostname)
             update_ytdl_format()
         end
     end
